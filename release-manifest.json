@@ -21,8 +21,8 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 13057,
-      "sha256": "0c26101b7ceb0e5d6b03040a7a28963b0f5ba95275351d3f8d5fd9f026ba7ec9"
+      "bytes": 13736,
+      "sha256": "b87585c0550014c3c52d7775165c80509fe40e83cd4ac8cca48474c31d104655"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -171,8 +171,8 @@
     },
     {
       "path": "references/initialization-and-profile.md",
-      "bytes": 9426,
-      "sha256": "fd40803ab6eac4ea95680bd903fbe7994e929cbd5edb2e27d7f7c7c5ce224e63"
+      "bytes": 9603,
+      "sha256": "c9df1b8be4211e4e05bfdc41b4acaea8fbc5832423d195b9baecf9b567069937"
     },
     {
       "path": "references/issue-schema.md",
@@ -231,5 +231,5 @@
     }
   ],
   "file_count": 45,
-  "total_bytes": 464779
+  "total_bytes": 465635
 }

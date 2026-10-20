@@ -10,12 +10,13 @@ description: "初始化并更新个人每日 AI 信息站：内置三家 newslet
 ## 入口
 
 - 使用用户选定的独立项目目录；已有实例先读其 `AGENTS.md` 与 `运行说明.md`，不套用其他项目的构建、托管或调度配置。没有实例时读 [首次使用与个人资料](references/initialization-and-profile.md)，从包内干净模板初始化，不复制其他人的站点数据。
+- 兼容旧工程：已有工程没有 `.daily-news/config.json` 时，`workflow.py init` 保持 v1；按该工程说明继续每次读取原 Page 及本次引用的保存 HTML，以 `task_ids` 审计，不运行 setup、不补 `none` 配置，也不触发新用户引导。若说明未保存具体 Page 入口，仅从该工程最近已验收的 v1 审计 `todo.page_id` 恢复入口，仍须本轮重新读取 Page 及其当前引用文件，不能复用旧正文或旧引用充当新输入。
 - 先探测宿主已有运行时，再运行包内 `scripts/doctor.py`。采集器最低要求 Node.js 18+；完整流程还需 Python、curl、vendor 与实际浏览能力。本机实测为 macOS、Node.js 24.12.0、Python 3.11.8；Windows 原生流程待适配，其他系统和版本不因脚本可启动就算完成验收。默认暖白日间主题，页面右上角按钮可切换黑夜主题并记住选择，两套主题覆盖整页和卡片；时区为上海。
 - 干净项目模板位于 `assets/project-template`，包含 Python 流程与页面 vendor；单独复制三个采集脚本不能得到完整站点。软件首次初始化与下面每期的 `workflow.py init` 是不同动作。
 - 产品筛选与完整性规则：[product-selection.md](references/product-selection.md)。Builders 完整改写规则：[builders-remix.md](references/builders-remix.md)。单期字段：[issue-schema.md](references/issue-schema.md)。提交前证据：[运行审计](references/run-audit.md)。
 - 浏览验收仍使用用户要求的 Ego Lite，并读取其浏览操作说明。它是验收工具，不是另一个资讯采集分支。
 
-首次默认在工具和权限允许范围内提炼近期会话标题与已有摘要，建议近 14 天最多 20 条，可调整；默认不读全部正文。展示候选后，由用户确认、编辑或忽略，确认前不长期写入资料或用于推荐。没有跨会话工具时使用当前对话或一句话填写，也可直接通用简报。具体流程、真实命令及权限边界见 [首次使用与个人资料](references/initialization-and-profile.md)。不要把能够读取已有摘要当成未来持续读取全部聊天的授权。
+新实例首次使用时，默认在工具和权限允许范围内提炼近期会话标题与已有摘要，建议近 14 天最多 20 条，可调整；默认不读全部正文。展示候选后，由用户确认、编辑或忽略，确认前不长期写入资料或用于推荐。没有跨会话工具时使用当前对话或一句话填写，也可直接通用简报。具体流程、真实命令及权限边界见 [首次使用与个人资料](references/initialization-and-profile.md)。不要把能够读取已有摘要当成未来持续读取全部聊天的授权。
 
 ## 一次运行
 
@@ -48,7 +49,7 @@ python3 scripts/workflow.py packet --run-dir <本次运行目录>
 
 ### 2. 使用本期已确认资料与选定来源
 
-配置保存在项目 `.daily-news/config.json`，三种 `context.mode`：`none` 为通用模式，个人栏必须为空；`profile` 只用确认资料；`context` 另读用户选定的本地 JSON/Markdown 或 Page 来源。没有背景不要求造待办、建 Page 或填职业。首次使用、来源配置与资料更新读 [个人资料流程](references/initialization-and-profile.md)。
+以下三模式及快照命令仅适用于已有 `.daily-news/config.json` 的实例；无配置的既有工程使用入口所述 v1 流程。三种 `context.mode`：`none` 为通用模式，个人栏必须为空；`profile` 只用确认资料；`context` 另读用户选定的本地 JSON/Markdown 或 Page 来源。没有背景不要求造待办、建 Page 或填职业。首次使用、来源配置与资料更新读 [个人资料流程](references/initialization-and-profile.md)。
 
 `workflow.py init` 按当前配置创建本期 `context/snapshot.json`。动态 Page 尚无本轮证据时返回 `needs-input` 和已创建的运行目录，宿主在该运行开始后实际读取 Page，更新来源的真实读取时间与证据路径，再执行 `context_profile.py snapshot --run-dir RUN`；有旧快照时显式加 `--refresh`。本地来源按选定路径读取。配置、确认资料或来源改变后重新生成快照并重走已失效检查点。每条个人资讯在审计中绑定本期 `context_ids`；旧版历史审计继续按其规则检查，不把 v1 材料改标为 v2。
 
@@ -74,7 +75,7 @@ Builders 按 [包内规则](references/builders-remix.md) 逐人整理，**保�
 
 ### 5. 来源门禁、候选、实际验收、提交
 
-用项目 `scripts/prepare_audit.py create` 根据真实文件生成输入审计，不手填哈希。审计 v2 绑定原始 Builders、本期上下文快照、个人资讯 `context_ids` 和素材身份；通用模式不要求待办。详见 [运行审计](references/run-audit.md)。
+用项目 `scripts/prepare_audit.py create` 根据真实文件生成输入审计，不手填哈希。配置实例的审计 v2 绑定原始 Builders、本期上下文快照、个人资讯 `context_ids` 和素材身份；通用模式不要求待办，旧工程仍按 v1 绑定 Page／HTML 与 `task_ids`。详见 [运行审计](references/run-audit.md)。
 
 ```sh
 python3 scripts/daily_site.py validate data/issues/<日期>.json --audit <本次审计JSON> --preview-root <候选父目录>
