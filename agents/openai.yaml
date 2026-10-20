@@ -1,0 +1,4 @@
+interface:
+  display_name: "每日 AI 信息站"
+  short_description: "初始化或更新自己的 AI 简报，可跳过个人资料，经真实来源与浏览验收保存站点"
+  default_prompt: "使用 $daily-news-site 初始化或更新我的每日 AI 信息站，个人资料先展示候选再由我确认，也可以直接使用通用简报。"

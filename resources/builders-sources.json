@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "language": "zh-CN",
+  "timeoutMs": 15000,
+  "retries": 2,
+  "maxResponseBytes": 31457280,
+  "feeds": [
+    {
+      "id": "tweets",
+      "key": "x",
+      "file": "tweets-feed.json",
+      "url": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-x.json"
+    },
+    {
+      "id": "podcasts",
+      "key": "podcasts",
+      "file": "podcasts-feed.json",
+      "url": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-podcasts.json"
+    },
+    {
+      "id": "blogs",
+      "key": "blogs",
+      "file": "blogs-feed.json",
+      "url": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-blogs.json"
+    }
+  ],
+  "policy": {
+    "keepAllReturnedBuilders": true,
+    "keepAllReturnedTweets": true,
+    "downloadRemotePrompts": false,
+    "useUserConfig": false,
+    "fallbackToOldFiles": false,
+    "fetchTweetBodiesFromX": false
+  }
+}
