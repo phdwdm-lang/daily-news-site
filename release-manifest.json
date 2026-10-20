@@ -51,8 +51,8 @@
     },
     {
       "path": "assets/project-template/README.md",
-      "bytes": 674,
-      "sha256": "687af3a2955477defaca3d36e4dca306b316c813b1eef90e28eeefe23eb1f645"
+      "bytes": 758,
+      "sha256": "78d788a6b7e1a9b136d44bccb4c097791d1e4c226b22ddb65ab12548adcd7e0b"
     },
     {
       "path": "assets/project-template/THIRD_PARTY_NOTICES.md",
@@ -231,5 +231,5 @@
     }
   ],
   "file_count": 45,
-  "total_bytes": 465635
+  "total_bytes": 465719
 }
